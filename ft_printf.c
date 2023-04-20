@@ -6,7 +6,7 @@
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:41:21 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/19 16:05:52 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:29:11 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,43 +50,54 @@ int	ft_is_conv(const char *fmt)
 
 int	ft_print_conv(const char *fmt, va_list ap, int *ret)
 {
-	(void)ap;
 	fmt++;
 	if (*fmt == '%')
 	{
 		ft_putchar('%');
 		*ret += 1;
-		return (2);
 	}
 	if (*fmt == 'c')
-		return (ft_print_char(va_arg(ap, int), ret));
+		(ft_print_char(va_arg(ap, int), ret));
 	if (*fmt == 's')
-		return (ft_print_str(va_arg(ap, char *), ret));
+		(ft_print_str(va_arg(ap, char *), ret));
 	if (*fmt == 'p')
-		return (ft_print_ptr(va_arg(ap, void *), ret));
-	return (0);
-}
-
-int	ft_print_char(int c, int *ret)
-{
-	ft_putchar(c);
-	*ret += 1;
+	{
+		ft_putstr_fd("0x", 1);
+		*ret += 2;
+		ft_print_ptr(va_arg(ap, unsigned long), ret);
+	}
+	if (*fmt == 'd' || *fmt == 'i')
+		ft_print_int(va_arg(ap, int), ret);
 	return (2);
 }
 
-int	ft_print_str(char *s, int *ret)
+void	ft_print_char(int c, int *ret)
+{
+	ft_putchar(c);
+	*ret += 1;
+}
+
+void	ft_print_str(char *s, int *ret)
 {
 	int	i;
 
 	i = (int)ft_strlen(s);
 	ft_putstr_fd(s, 1);
 	*ret += i;
-	return (2);
 }
 
-int	ft_print_ptr(void *p, int *ret)
+void	ft_print_ptr(unsigned long n, int *ret)
 {
-	ft_putstr_fd(&p, 1);
-	*ret += 14;
-	return (2);
+	char	*hexa;
+
+	hexa = "0123456789abcdef";
+	if (n > 15)
+		ft_print_ptr(n / 16, ret);
+	ft_putchar(hexa[n % 16]);
+	*ret += 1;
+}
+
+void	ft_print_int(int n, int *ret)
+{
+
 }
