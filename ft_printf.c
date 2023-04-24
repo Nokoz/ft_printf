@@ -6,7 +6,7 @@
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:41:21 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/24 15:17:40 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:51:50 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,16 @@ int	ft_print_conv(const char *fmt, va_list *ap, int *ret)
 	{
 		ft_putstr_fd("0x", 1);
 		*ret += 2;
-		ft_print_ptr(va_arg(*ap, unsigned long), ret);
+		ft_print_hexa(va_arg(*ap, unsigned long), ret, 0);
 	}
 	if (*fmt == 'd' || *fmt == 'i')
 		ft_print_int(va_arg(*ap, int), ret);
+	if (*fmt == 'u')
+		ft_print_nbr(va_arg(*ap, unsigned int), ret);
+	if (*fmt == 'x')
+		ft_print_hexa(va_arg(*ap, unsigned long), ret , 0);
+	if (*fmt == 'X')
+		ft_print_hexa(va_arg(*ap, unsigned long), ret , 1);
 	return (2);
 }
 
@@ -83,14 +89,18 @@ void	ft_print_str(char *s, int *ret)
 	*ret += i;
 }
 
-void	ft_print_ptr(unsigned long n, int *ret)
+void	ft_print_hexa(unsigned long n, int *ret, int maj)
 {
 	char	*hexa;
 
-	hexa = "0123456789abcdef";
+	if (maj == 0)
+		hexa = "0123456789abcdef";
+	if (maj == 1)
+		hexa = "0123456789ABCDEF";
 	if (n > 15)
-		ft_print_ptr(n / 16, ret);
-	ft_putchar(hexa[n % 16]);
+		ft_print_hexa(n / 16, ret, maj);
+	if (maj == 1)
+		ft_putchar(ft_toupper(hexa[n % 16]));
 	*ret += 1;
 }
 
