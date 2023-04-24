@@ -6,7 +6,7 @@
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:41:21 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/24 09:27:34 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:17:40 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,22 @@ void	ft_print_ptr(unsigned long n, int *ret)
 
 void	ft_print_int(int n, int *ret)
 {
-	(void)n;
-	(void)ret;
+	long	nbr;
+
+	nbr = n;
+	if (n < 0)
+	{
+		ft_putchar('-');
+		nbr *= -1;
+		*ret += 1;
+	}
+	ft_print_nbr(nbr, ret);
+}
+
+static void	ft_print_nbr(unsigned int n, int *ret)
+{
+	if (n > 9)
+		ft_print_nbr(n / 10, ret);
+	ft_putchar((n % 10) + 48);
+	*ret += 1;
 }

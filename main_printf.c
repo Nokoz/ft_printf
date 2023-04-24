@@ -6,7 +6,7 @@
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:00:02 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/24 09:30:47 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:21:14 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	main(void)
 	int		ret;
 	char	c;
 	char	*str = "string";
-	char	*str2 = "ssttrriinngg";
+	int		nbr = 2147483647;
 	
 	ret = 0;
 	c = 'a';
-	ret = ft_printf("Bonjo%%ur char = %c\n str = %s\n str = %s\n p = %p\n decimal = %%\n", c, str, str2, &c);
+	ret = ft_printf("\nBonjo%%ur char = %c\n str = %s\n p = %p\n decimal = %d\n int = %i\n", c, str, &c, nbr, nbr);
 	printf("ft_ret = %d\n", ret);
-	ret = printf("\nBonjo%%ur char = %c\n str = %s\n p = %p\n decimal %% \n", c, str, &c);
+	ret = printf("\nBonjo%%ur char = %c\n str = %s\n p = %p\n decimal = %d\n int = %i\n", c, str, &c, nbr, nbr);
 	printf("ret = %d\n", ret);
 	return (0);
 }
