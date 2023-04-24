@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_printf.c                                      :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:00:02 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/24 09:30:47 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 09:06:23 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@
 int	main(void)
 {
 	int		ret;
-	char	c;
-	char	*str = "string";
-	char	*str2 = "ssttrriinngg";
+	char	str[6] = "string";
 	
 	ret = 0;
-	c = 'a';
-	ret = ft_printf("Bonjo%%ur char = %c\n str = %s\n str = %s\n p = %p\n decimal = %%\n", c, str, str2, &c);
+	ret = ft_printf("Bonjo%%ur\n str = %s\n decimal = %%\n", str);
 	printf("ft_ret = %d\n", ret);
-	ret = printf("\nBonjo%%ur char = %c\n str = %s\n p = %p\n decimal %% \n", c, str, &c);
+	ret = printf("Bonjo%%ur\n str = %s\n decimal = %%\n", str);
 	printf("ret = %d\n", ret);
 	return (0);
 }

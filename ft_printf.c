@@ -6,7 +6,7 @@
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:41:21 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/24 08:34:44 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 09:27:34 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_printf(const char *fmt, ...)
 			ret += 1;
 		}
 		if (ft_is_conv(&fmt[i]))
-			i += ft_print_conv(&fmt[i], ap, &ret);
+			i += ft_print_conv(&fmt[i], &ap, &ret);
 	}
 	va_end(ap);
 	return (ret);
@@ -38,9 +38,6 @@ int	ft_printf(const char *fmt, ...)
 
 int	ft_is_conv(const char *fmt)
 {
-	int	res;
-
-	res = 0;
 	if (*fmt == 'c' || *fmt == 's' || *fmt == 'p' || *fmt == 'd'
 		|| *fmt == 'i' || *fmt == 'u' || *fmt == 'x' || *fmt == 'X'
 		|| *fmt == '%')
@@ -48,7 +45,7 @@ int	ft_is_conv(const char *fmt)
 	return (0);
 }
 
-int	ft_print_conv(const char *fmt, va_list ap, int *ret)
+int	ft_print_conv(const char *fmt, va_list *ap, int *ret)
 {
 	fmt++;
 	if (*fmt == '%')
@@ -57,17 +54,17 @@ int	ft_print_conv(const char *fmt, va_list ap, int *ret)
 		*ret += 1;
 	}
 	if (*fmt == 'c')
-		(ft_print_char(va_arg(ap, int), ret));
+		(ft_print_char(va_arg(*ap, int), ret));
 	if (*fmt == 's')
-		(ft_print_str(va_arg(ap, char *), ret));
+		(ft_print_str(va_arg(*ap, char *), ret));
 	if (*fmt == 'p')
 	{
 		ft_putstr_fd("0x", 1);
 		*ret += 2;
-		ft_print_ptr(va_arg(ap, unsigned long), ret);
+		ft_print_ptr(va_arg(*ap, unsigned long), ret);
 	}
 	if (*fmt == 'd' || *fmt == 'i')
-		ft_print_int(va_arg(ap, int), ret);
+		ft_print_int(va_arg(*ap, int), ret);
 	return (2);
 }
 
