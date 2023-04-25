@@ -6,7 +6,7 @@
 /*   By: gvardaki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:41:21 by gvardaki          #+#    #+#             */
-/*   Updated: 2023/04/24 16:51:50 by gvardaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:37:00 by gvardaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,15 @@ int	ft_print_conv(const char *fmt, va_list *ap, int *ret)
 	if (*fmt == 's')
 		(ft_print_str(va_arg(*ap, char *), ret));
 	if (*fmt == 'p')
-	{
-		ft_putstr_fd("0x", 1);
-		*ret += 2;
-		ft_print_hexa(va_arg(*ap, unsigned long), ret, 0);
-	}
+		ft_print_ptr(va_arg(*ap, unsigned long), ret);
 	if (*fmt == 'd' || *fmt == 'i')
 		ft_print_int(va_arg(*ap, int), ret);
 	if (*fmt == 'u')
 		ft_print_nbr(va_arg(*ap, unsigned int), ret);
 	if (*fmt == 'x')
-		ft_print_hexa(va_arg(*ap, unsigned long), ret , 0);
+		ft_print_hexa(va_arg(*ap, unsigned int), ret, 0);
 	if (*fmt == 'X')
-		ft_print_hexa(va_arg(*ap, unsigned long), ret , 1);
+		ft_print_hexa(va_arg(*ap, unsigned int), ret, 1);
 	return (2);
 }
 
@@ -84,44 +80,13 @@ void	ft_print_str(char *s, int *ret)
 {
 	int	i;
 
+	if (!s)
+	{
+		ft_putstr_fd("(null)", 1);
+		*ret += 6;
+		return ;
+	}
 	i = (int)ft_strlen(s);
 	ft_putstr_fd(s, 1);
 	*ret += i;
-}
-
-void	ft_print_hexa(unsigned long n, int *ret, int maj)
-{
-	char	*hexa;
-
-	if (maj == 0)
-		hexa = "0123456789abcdef";
-	if (maj == 1)
-		hexa = "0123456789ABCDEF";
-	if (n > 15)
-		ft_print_hexa(n / 16, ret, maj);
-	if (maj == 1)
-		ft_putchar(ft_toupper(hexa[n % 16]));
-	*ret += 1;
-}
-
-void	ft_print_int(int n, int *ret)
-{
-	long	nbr;
-
-	nbr = n;
-	if (n < 0)
-	{
-		ft_putchar('-');
-		nbr *= -1;
-		*ret += 1;
-	}
-	ft_print_nbr(nbr, ret);
-}
-
-static void	ft_print_nbr(unsigned int n, int *ret)
-{
-	if (n > 9)
-		ft_print_nbr(n / 10, ret);
-	ft_putchar((n % 10) + 48);
-	*ret += 1;
 }
